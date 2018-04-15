@@ -63,6 +63,24 @@ void move_pointer(int dest_x,int dest_y){
   XCloseDisplay(display);
 }
 
+typedef struct keymap {
+  int gdk_key;
+  int x_pos;
+  int y_pos;
+  int mod_x_pos;
+  int mod_y_pos;
+} keyMap;
+
+keyMap keys [40];
+
+void define_key(int item, int gdk_key, int x_pos, int y_pos, int mod_x_pos, int mod_y_pos){
+  keys[item].gdk_key = gdk_key;
+  keys[item].x_pos = x_pos;
+  keys[item].y_pos = y_pos;
+  keys[item].mod_x_pos = mod_x_pos;
+  keys[item].mod_y_pos = mod_y_pos;
+}
+
 gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
 
   int hoffset = hstep/2;
@@ -90,455 +108,63 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
     gtk_main_quit();
   }
 
-  // left hand
-  if (event->keyval == GDK_KEY_1){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (5 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+0 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 0;
-      y_position = 0;
-    }
-  }
-  if (event->keyval == GDK_KEY_2){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (4 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+1 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 1;
-      y_position = 0;
-    }
-  }
-  if (event->keyval == GDK_KEY_3){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (3 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+2 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 2;
-      y_position = 0;
-    }
-  }
-  if (event->keyval == GDK_KEY_4){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (2 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+3 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 3;
-      y_position = 0;
-    }
-  }
-  if (event->keyval == GDK_KEY_5){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (1 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+4 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 4;
-      y_position = 0;
+  define_key(0, GDK_KEY_1, 0, 0, 5, 1);
+  define_key(1, GDK_KEY_2, 1, 0, 4, 1);
+  define_key(2, GDK_KEY_3, 2, 0, 3, 1);
+  define_key(3, GDK_KEY_4, 3, 0, 2, 1);
+  define_key(4, GDK_KEY_5, 4, 0, 1, 1);
+  define_key(5, GDK_KEY_q, 0, 1, 5, 0);
+  define_key(6, GDK_KEY_w, 1, 1, 4, 0);
+  define_key(7, GDK_KEY_e, 2, 1, 3, 0);
+  define_key(8, GDK_KEY_r, 3, 1, 2, 0);
+  define_key(9, GDK_KEY_t, 4, 1, 1, 0);
+  define_key(10, GDK_KEY_a, 0, 2, 5, -1);
+  define_key(11, GDK_KEY_s, 1, 2, 4, -1);
+  define_key(12, GDK_KEY_d, 2, 2, 3, -1);
+  define_key(13, GDK_KEY_f, 3, 2, 2, -1);
+  define_key(14, GDK_KEY_g, 4, 2, 1, -1);
+  define_key(15, GDK_KEY_z, 0, 3, 5, -2);
+  define_key(16, GDK_KEY_x, 1, 3, 4, -2);
+  define_key(17, GDK_KEY_c, 2, 3, 3, -2);
+  define_key(18, GDK_KEY_v, 3, 3, 2, -2);
+  define_key(19, GDK_KEY_b, 4, 3, 1, -2);
+
+  define_key(20, GDK_KEY_6, 5, 0, 0, 1);
+  define_key(21, GDK_KEY_7, 6, 0, -1, 1);
+  define_key(22, GDK_KEY_8, 7, 0, -2, 1);
+  define_key(23, GDK_KEY_9, 8, 0, -3, 1);
+  define_key(24, GDK_KEY_0, 9, 0, -4, 1);
+  define_key(25, GDK_KEY_y, 5, 1, 0, 0);
+  define_key(26, GDK_KEY_u, 6, 1, -1, 0);
+  define_key(27, GDK_KEY_i, 7, 1, -2, 0);
+  define_key(28, GDK_KEY_o, 8, 1, -3, 0);
+  define_key(29, GDK_KEY_p, 9, 1, -4, 0);
+  define_key(30, GDK_KEY_h, 5, 2, -0, -1);
+  define_key(31, GDK_KEY_j, 6, 2, -1, -1);
+  define_key(32, GDK_KEY_k, 7, 2, -2, -1);
+  define_key(33, GDK_KEY_l, 8, 2, -3, -1);
+  define_key(34, GDK_KEY_ccedilla, 9, 2, -4, -1);
+  define_key(35, GDK_KEY_n, 5, 3, 0, -2);
+  define_key(36, GDK_KEY_m, 6, 3, -1, -2);
+  define_key(37, GDK_KEY_comma, 7, 3, -2, -2);
+  define_key(38, GDK_KEY_period, 8, 3, -3, -2);
+  define_key(39, GDK_KEY_semicolon, 9, 3, -4, -2);
+
+  int k;
+  for(k=0; k<40; k++){
+    if (event->keyval == keys[k].gdk_key){
+      if (event->state & GDK_CONTROL_MASK) {
+        move_pointer(hsquare - (keys[k].mod_x_pos * hrelative - hrel_offset), vsquare - (keys[k].mod_y_pos * vrelative + vrel_offset));
+      }else{
+        hsquare = hoffset + keys[k].x_pos * hstep;
+        vsquare = voffset + keys[k].y_pos * vstep;
+        move_pointer(hsquare, vsquare);
+        x_position = keys[k].x_pos;
+        y_position = keys[k].y_pos;
+      }
     }
   }
 
-  if (event->keyval == GDK_KEY_q){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (5 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+0 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 0;
-      y_position = 1;
-    }
-  }
-  if (event->keyval == GDK_KEY_w){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (4 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+1 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 1;
-      y_position = 1;
-    }
-  }
-  if (event->keyval == GDK_KEY_e){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (3 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+2 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 2;
-      y_position = 1;
-    }
-  }
-  if (event->keyval == GDK_KEY_r){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (2 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+3 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 3;
-      y_position = 1;
-    }
-  }
-  if (event->keyval == GDK_KEY_t){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (1 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+4 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 4;
-      y_position = 1;
-    }
-  }
-
-  if (event->keyval == GDK_KEY_a){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (5 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+0 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 0;
-      y_position = 2;
-    }
-  }
-  if (event->keyval == GDK_KEY_s){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (4 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+1 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 1;
-      y_position = 2;
-    }
-  }
-  if (event->keyval == GDK_KEY_d){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (3 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+2 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 2;
-      y_position = 2;
-    }
-  }
-  if (event->keyval == GDK_KEY_f){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (2 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+3 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 3;
-      y_position = 2;
-    }
-  }
-  if (event->keyval == GDK_KEY_g){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (1 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+4 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 4;
-      y_position = 2;
-    }
-  }
-
-  if (event->keyval == GDK_KEY_z){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (5 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+0 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 0;
-      y_position = 3;
-    }
-  }
-  if (event->keyval == GDK_KEY_x){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (4 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+1 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 1;
-      y_position = 3;
-    }
-  }
-  if (event->keyval == GDK_KEY_c){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (3 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+2 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 2;
-      y_position = 3;
-    }
-  }
-  if (event->keyval == GDK_KEY_v){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (2 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+3 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 3;
-      y_position = 3;
-    }
-  }
-  if (event->keyval == GDK_KEY_b){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare - (1 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+4 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 4;
-      y_position = 3;
-    }
-  }
-
-  // right hand
-  if (event->keyval == GDK_KEY_6){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (1 * hrelative + hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+5 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 5;
-      y_position = 0;
-    }
-  }
-  if (event->keyval == GDK_KEY_7){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (2 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+6 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 6;
-      y_position = 0;
-    }
-  }
-  if (event->keyval == GDK_KEY_8){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (3 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+7 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 7;
-      y_position = 0;
-    }
-  }
-  if (event->keyval == GDK_KEY_9){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (4 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+8 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 8;
-      y_position = 0;
-    }
-  }
-  if (event->keyval == GDK_KEY_0){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (5 * hrelative - hrel_offset), vsquare - (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+9 * hstep;
-      vsquare = voffset+0 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 9;
-      y_position = 0;
-    }
-  }
-
-  if (event->keyval == GDK_KEY_y){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (1 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+5 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 5;
-      y_position = 1;
-    }
-  }
-  if (event->keyval == GDK_KEY_u){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (2 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+6 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 6;
-      y_position = 1;
-    }
-  }
-  if (event->keyval == GDK_KEY_i){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (3 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+7 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 7;
-      y_position = 1;
-    }
-  }
-  if (event->keyval == GDK_KEY_o){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (4 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+8 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 8;
-      y_position = 1;
-    }
-  }
-  if (event->keyval == GDK_KEY_p){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (5 * hrelative - hrel_offset), vsquare - (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+9 * hstep;
-      vsquare = voffset+1 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 9;
-      y_position = 1;
-    }
-  }
-
-  if (event->keyval == GDK_KEY_h){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (1 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+5 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 5;
-      y_position = 2;
-    }
-  }
-  if (event->keyval == GDK_KEY_j){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (2 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+6 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 6;
-      y_position = 2;
-    }
-  }
-  if (event->keyval == GDK_KEY_k){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (3 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+7 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 7;
-      y_position = 2;
-    }
-  }
-  if (event->keyval == GDK_KEY_l){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (4 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+8 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 8;
-      y_position = 2;
-    }
-  }
-  if (event->keyval == GDK_KEY_ccedilla){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (5 * hrelative - hrel_offset), vsquare + (0 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+9 * hstep;
-      vsquare = voffset+2 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 9;
-      y_position = 2;
-    }
-  }
-
-  if (event->keyval == GDK_KEY_n){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (1 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+5 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 5;
-      y_position = 3;
-    }
-  }
-  if (event->keyval == GDK_KEY_m){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (2 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+6 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 6;
-      y_position = 3;
-    }
-  }
-  if (event->keyval == GDK_KEY_comma){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (3 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+7 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 7;
-      y_position = 3;
-    }
-  }
-  if (event->keyval == GDK_KEY_period){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (4 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+8 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 8;
-      y_position = 3;
-    }
-  }
-  if (event->keyval == GDK_KEY_semicolon){
-    if (event->state & GDK_CONTROL_MASK) {
-      move_pointer(hsquare + (5 * hrelative - hrel_offset), vsquare + (1 * vrelative + vrel_offset));
-    }else{
-      hsquare = hoffset+9 * hstep;
-      vsquare = voffset+3 * vstep;
-      move_pointer(hsquare, vsquare);
-      x_position = 9;
-      y_position = 3;
-    }
-  }
   if (event->keyval == GDK_KEY_Left){
     move_pointer(x_cursor_pos - cursor_step, y_cursor_pos);
   }
