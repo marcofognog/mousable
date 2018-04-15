@@ -8,10 +8,6 @@
 #include <stdio.h>
 #include <cairo-xlib.h>
 
-#ifndef M_PI
-    #define M_PI 3.14159265358979323846
-#endif
-
 GtkWidget *window;
 Window root;
 int hsquare = 0;
