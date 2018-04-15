@@ -46,21 +46,13 @@ void unclick(int num){
   XCloseDisplay(display);
 }
 
-void click_left(){
-  click(1);
-}
+void click_left(){ click(1); }
 
-void unclick_left(){
-  unclick(1);
-}
+void unclick_left(){ unclick(1); }
 
-void click_scroll(){
-  click(2);
-}
+void click_scroll(){ click(2); }
 
-void unclick_scroll(){
-  unclick(2);
-}
+void unclick_scroll(){ unclick(2); }
 
 void move_pointer(int dest_x,int dest_y){
   Display* display = XOpenDisplay(0);
