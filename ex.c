@@ -28,6 +28,9 @@ int x_cursor_pos;
 int y_cursor_pos;
 int cursor_step = 10;
 
+float current_x_pos;
+float current_y_pos;
+
 void click(int num){
   Display* display = XOpenDisplay(0);
   XTestFakeButtonEvent(display, num, 1, 0);
@@ -57,6 +60,8 @@ void move_pointer(int dest_x,int dest_y){
   y_cursor_pos = dest_y;
   XFlush(display);
   XCloseDisplay(display);
+  current_x_pos = dest_x;
+  current_y_pos = dest_y;
 }
 
 typedef struct keymap {
@@ -223,7 +228,16 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget) {
   cairo_paint(cr);
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   cairo_paint_with_alpha (cr, 0.3);
-  draw_selection (cr, x_position, y_position);
+
+  float found_x = (current_x_pos / hstep);
+  float found_y = (current_y_pos / vstep);
+
+  draw_selection (cr, (int)found_x, (int)found_y);
+}
+
+static gboolean get_pointer_pos (GtkWidget *widget, GdkEventCrossing *event, gpointer   user_data){
+  current_x_pos = (int) event->x;
+  current_y_pos = (int) event->y;
 }
 
 int main(int argc, char *argv[]) {
@@ -270,7 +284,9 @@ int main(int argc, char *argv[]) {
   gtk_window_fullscreen (GTK_WINDOW(window));
 
   gtk_widget_add_events(window, GDK_KEY_PRESS_MASK);
+  gtk_widget_add_events(window, GDK_POINTER_MOTION_MASK);
   g_signal_connect (G_OBJECT (window), "key-press-event", G_CALLBACK (on_key_press), NULL);
+  g_signal_connect (G_OBJECT (window), "enter-notify-event", G_CALLBACK (get_pointer_pos), NULL);
 
   gtk_widget_show_all(window);
 
