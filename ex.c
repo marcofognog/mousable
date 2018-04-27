@@ -1,11 +1,10 @@
-#include <cairo.h>
 #include <unistd.h>
-#include <X11/extensions/XTest.h>
-#include <gtk/gtk.h>
-#include <math.h>
 #include <stdlib.h>
-#include <X11/Xlib.h>
 #include <stdio.h>
+#include <gtk/gtk.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
+#include <cairo.h>
 #include <cairo-xlib.h>
 
 GtkWidget *window;
