@@ -32,6 +32,16 @@ float current_y_pos;
 
 cairo_surface_t *surface;
 
+typedef struct keymap {
+  int gdk_key;
+  int x_pos;
+  int y_pos;
+  int mod_x_pos;
+  int mod_y_pos;
+} keyMap;
+
+keyMap keys [40];
+
 void click(int num){
   Display* display = XOpenDisplay(0);
   XTestFakeButtonEvent(display, num, 1, 0);
@@ -64,16 +74,6 @@ void move_pointer(int dest_x,int dest_y){
   current_x_pos = dest_x;
   current_y_pos = dest_y;
 }
-
-typedef struct keymap {
-  int gdk_key;
-  int x_pos;
-  int y_pos;
-  int mod_x_pos;
-  int mod_y_pos;
-} keyMap;
-
-keyMap keys [40];
 
 void define_key(int item, int gdk_key, int x_pos, int y_pos, int mod_x_pos, int mod_y_pos){
   keys[item].gdk_key = gdk_key;
@@ -183,14 +183,6 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
   gtk_widget_queue_draw(window);
 }
 
-static void do_drawing(cairo_t *, GtkWidget *);
-
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-  do_drawing(cr, widget);
-
-  return FALSE;
-}
-
 void draw_selection(cairo_t *cr, int x_position, int y_position){
   double x = x_position * hstep;
   double y = y_position * vstep;
@@ -225,6 +217,12 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget) {
   float found_y = (current_y_pos / vstep);
 
   draw_selection (cr, (int)found_x, (int)found_y);
+}
+
+static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+  do_drawing(cr, widget);
+
+  return FALSE;
 }
 
 static gboolean get_pointer_pos (GtkWidget *widget, GdkEventCrossing *event, gpointer   user_data){
