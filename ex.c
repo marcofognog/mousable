@@ -46,13 +46,13 @@ void unclick(int num){
   XCloseDisplay(display);
 }
 
-void click_left(){ click(1); }
+void click_left() { click(1); }
 
-void unclick_left(){ unclick(1); }
+void unclick_left() { unclick(1); }
 
-void click_scroll(){ click(2); }
+void click_scroll() { click(2); }
 
-void unclick_scroll(){ unclick(2); }
+void unclick_scroll() { unclick(2); }
 
 void move_pointer(int dest_x,int dest_y){
   Display* display = XOpenDisplay(0);
@@ -84,7 +84,6 @@ void define_key(int item, int gdk_key, int x_pos, int y_pos, int mod_x_pos, int 
 }
 
 gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
-
   int hoffset = hstep/2;
   int voffset = vstep/2;
 
