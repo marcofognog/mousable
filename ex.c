@@ -260,7 +260,9 @@ int main(int argc, char *argv[]) {
   surface = cairo_xlib_surface_create(disp, root, DefaultVisual(disp, scr),
                                       DisplayWidth(disp, scr),
                                       DisplayHeight(disp, scr));
-  cairo_surface_write_to_png( surface, "opa.png");
+
+  // Why do we need to save to a file for the surface to have the right image?
+  cairo_surface_write_to_png( surface, "/dev/null");
 
   glob.image = surface;
   width = cairo_image_surface_get_width(glob.image);
