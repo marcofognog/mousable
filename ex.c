@@ -221,8 +221,6 @@ void draw_selection(cairo_t *cr, int x_position, int y_position){
 static void do_drawing(cairo_t *cr, GtkWidget *widget) {
   GtkWidget *win = gtk_widget_get_toplevel(widget);
 
-  gint width, height;
-  gtk_window_get_size(GTK_WINDOW(win), &width, &height);
   cairo_set_source_surface(cr, glob.image, 0, 0);
   cairo_paint(cr);
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
@@ -240,8 +238,6 @@ static gboolean get_pointer_pos (GtkWidget *widget, GdkEventCrossing *event, gpo
 }
 
 int main(int argc, char *argv[]) {
-  gint width, height;
-
   Display *disp;
   cairo_surface_t *surface;
   int scr;
