@@ -217,8 +217,6 @@ void draw_selection(cairo_t *cr, int x_position, int y_position){
 }
 
 static void do_drawing(cairo_t *cr, GtkWidget *widget) {
-  GtkWidget *win = gtk_widget_get_toplevel(widget);
-
   cairo_set_source_surface(cr, surface, 0, 0);
   cairo_paint(cr);
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
