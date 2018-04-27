@@ -30,6 +30,8 @@ int cursor_step = 10;
 float current_x_pos;
 float current_y_pos;
 
+cairo_surface_t *surface;
+
 void click(int num){
   Display* display = XOpenDisplay(0);
   XTestFakeButtonEvent(display, num, 1, 0);
@@ -184,10 +186,6 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
 
 static void do_drawing(cairo_t *, GtkWidget *);
 
-struct {
-  cairo_surface_t *image;
-} glob;
-
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
   do_drawing(cr, widget);
 
@@ -197,7 +195,7 @@ static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data
 void draw_selection(cairo_t *cr, int x_position, int y_position){
   double x = x_position * hstep;
   double y = y_position * vstep;
-  cairo_set_source_surface(cr, glob.image, 0, 0);
+  cairo_set_source_surface(cr, surface, 0, 0);
   cairo_rectangle (cr, x, y, hstep, vstep);
   cairo_fill(cr);
 
@@ -221,7 +219,7 @@ void draw_selection(cairo_t *cr, int x_position, int y_position){
 static void do_drawing(cairo_t *cr, GtkWidget *widget) {
   GtkWidget *win = gtk_widget_get_toplevel(widget);
 
-  cairo_set_source_surface(cr, glob.image, 0, 0);
+  cairo_set_source_surface(cr, surface, 0, 0);
   cairo_paint(cr);
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   cairo_paint_with_alpha (cr, 0.3);
@@ -239,7 +237,6 @@ static gboolean get_pointer_pos (GtkWidget *widget, GdkEventCrossing *event, gpo
 
 int main(int argc, char *argv[]) {
   Display *disp;
-  cairo_surface_t *surface;
   int scr;
 
   disp = XOpenDisplay(":0");
@@ -258,8 +255,6 @@ int main(int argc, char *argv[]) {
 
   // Why do we need to save to a file for the surface to have the right image?
   cairo_surface_write_to_png( surface, "/dev/null");
-
-  glob.image = surface;
 
   gtk_init(&argc, &argv);
 
@@ -297,7 +292,7 @@ int main(int argc, char *argv[]) {
     unclick_scroll();
   }
 
-  cairo_surface_destroy(glob.image);
+  cairo_surface_destroy(surface);
 
   return 0;
 }
