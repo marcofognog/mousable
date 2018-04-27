@@ -264,8 +264,6 @@ int main(int argc, char *argv[]) {
   cairo_surface_write_to_png( surface, "/dev/null");
 
   glob.image = surface;
-  width = cairo_image_surface_get_width(glob.image);
-  height = cairo_image_surface_get_height(glob.image);
 
   gtk_init(&argc, &argv);
 
