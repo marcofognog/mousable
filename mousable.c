@@ -85,7 +85,6 @@ void draw_selection(cairo_t *cr, int x_position, int y_position){
 }
 
 void draw_one_letter(cairo_t * cr, int x_position, int y_position, const char * one_letter){
-  // Display letters
   cairo_select_font_face(cr, "monospace", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
   cairo_set_font_size(cr, 60);
   cairo_move_to(cr, x_position * hstep + (hstep/2), y_position * vstep + (vstep/2));
