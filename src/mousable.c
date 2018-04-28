@@ -62,16 +62,16 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
   }
 
   if (event->keyval == GDK_KEY_Left){
-    move_pointer(x_cursor_pos - cursor_step, y_cursor_pos);
+    move_pointer(current_x_pos - cursor_step, current_y_pos);
   }
   if (event->keyval == GDK_KEY_Right){
-    move_pointer(x_cursor_pos + cursor_step, y_cursor_pos);
+    move_pointer(current_x_pos + cursor_step, current_y_pos);
   }
   if (event->keyval == GDK_KEY_Up){
-    move_pointer(x_cursor_pos, y_cursor_pos - cursor_step);
+    move_pointer(current_x_pos, current_y_pos - cursor_step);
   }
   if (event->keyval == GDK_KEY_Down){
-    move_pointer(x_cursor_pos, y_cursor_pos + cursor_step);
+    move_pointer(current_x_pos, current_y_pos + cursor_step);
   }
 
   match_key(event);
