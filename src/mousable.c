@@ -15,7 +15,7 @@ int display_alpha_layer = 0;
 int display_grid = 0;
 int display_letters = 1;
 
-gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
+void match_key (GdkEventKey * event){
   int hoffset = hstep/2;
   int voffset = vstep/2;
 
@@ -23,23 +23,6 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
   int vrelative = vstep/4;
   int hrel_offset = hrelative/2;
   int vrel_offset = vrelative/2;
-
-  if (event->keyval == GDK_KEY_Escape){
-    gtk_main_quit();
-  }
-  g_printerr("%s\n", gdk_keyval_name (event->keyval));
-
-  if (event->keyval == GDK_KEY_Return){
-    click_scroll_flag = 1;
-    gtk_widget_destroy(window);
-    gtk_main_quit();
-  }
-
-  if (event->keyval == GDK_KEY_space){
-    click_flag = 1;
-    gtk_widget_destroy(window);
-    gtk_main_quit();
-  }
 
   int k;
   for(k=0; k<40; k++){
@@ -58,6 +41,25 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
       }
     }
   }
+}
+
+gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
+  if (event->keyval == GDK_KEY_Escape){
+    gtk_main_quit();
+  }
+  g_printerr("%s\n", gdk_keyval_name (event->keyval));
+
+  if (event->keyval == GDK_KEY_Return){
+    click_scroll_flag = 1;
+    gtk_widget_destroy(window);
+    gtk_main_quit();
+  }
+
+  if (event->keyval == GDK_KEY_space){
+    click_flag = 1;
+    gtk_widget_destroy(window);
+    gtk_main_quit();
+  }
 
   if (event->keyval == GDK_KEY_Left){
     move_pointer(x_cursor_pos - cursor_step, y_cursor_pos);
@@ -71,6 +73,8 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
   if (event->keyval == GDK_KEY_Down){
     move_pointer(x_cursor_pos, y_cursor_pos + cursor_step);
   }
+
+  match_key(event);
 
   // redraw
   gtk_widget_queue_draw(window);
