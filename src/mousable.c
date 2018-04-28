@@ -45,7 +45,6 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
   if (event->keyval == GDK_KEY_Escape){
     gtk_main_quit();
   }
-  g_printerr("%s\n", gdk_keyval_name (event->keyval));
 
   if (event->keyval == GDK_KEY_Return){
     click_scroll_flag = 1;
