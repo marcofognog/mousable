@@ -160,6 +160,20 @@ static gboolean get_pointer_pos (GtkWidget *widget, GdkEventCrossing *event, gpo
   current_y_pos = (int) event->y;
 }
 
+void show_usage(void) {
+   fprintf(stdout,
+           "Usage : mousable [OPTIONS]\n"
+           "  -h, --help                Display this help and exit.\n"
+           "  -g, --no-grid             Do not display the grid.\n"
+           "  -c, --no-cover            Do not display the transparent cover.\n"
+           "  -l, --no-letters          Do not display the letters corresponding to each selectable area.\n"
+           "  -s, --cursor-step         Set the unit, in pixels, of the length that the mouse pointer moves in each step.\n"
+           "This program is free software see the file MIT-LICENSE for licensing info.\n"
+           "Copyright Marco Antonio F. Nogueira 2018\n"
+           );
+   exit(0);
+}
+
 int main(int argc, char *argv[]) {
   int c;
   while(1){
@@ -191,7 +205,7 @@ int main(int argc, char *argv[]) {
       cursor_step = atoi(optarg);
       break;
     case 'h':
-      printf("help\n");
+      show_usage();
       exit(0);
     }
 
