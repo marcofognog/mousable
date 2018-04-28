@@ -42,6 +42,10 @@ typedef struct keymap {
 
 keyMap keys [40];
 
+int display_alpha_layer = 0;
+int display_grid = 0;
+int display_letters = 1;
+
 void click(int num){
   Display* display = XOpenDisplay(0);
   XTestFakeButtonEvent(display, num, 1, 0);
@@ -265,18 +269,28 @@ void draw_grid(cairo_t * cr){
   cairo_stroke (cr);
 }
 
+void draw_alpha_layer(cairo_t *cr){
+  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+  cairo_paint_with_alpha (cr, 0.3);
+}
+
 static void do_drawing(cairo_t *cr, GtkWidget *widget) {
   cairo_set_source_surface(cr, surface, 0, 0);
   cairo_paint(cr);
-  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-  cairo_paint_with_alpha (cr, 0.3);
 
-  float found_x = (current_x_pos / hstep);
-  float found_y = (current_y_pos / vstep);
+  if(display_alpha_layer){
+    float found_x = (current_x_pos / hstep);
+    float found_y = (current_y_pos / vstep);
+    draw_alpha_layer;
+    draw_selection (cr, (int)found_x, (int)found_y);
+  }
 
-  draw_grid(cr);
-  draw_selection (cr, (int)found_x, (int)found_y);
-  draw_letters(cr);
+  if (display_grid)
+    draw_grid(cr);
+
+
+  if (display_letters)
+    draw_letters(cr);
 }
 
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
