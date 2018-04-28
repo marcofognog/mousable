@@ -45,7 +45,10 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
   for(k=0; k<40; k++){
     if (event->keyval == keys[k].gdk_key){
       if (event->state & GDK_CONTROL_MASK) {
-        move_pointer(hsquare - (keys[k].mod_x_pos * hrelative - hrel_offset), vsquare - (keys[k].mod_y_pos * vrelative + vrel_offset));
+        move_pointer(
+                     hsquare - (keys[k].mod_x_pos * hrelative - hrel_offset),
+                     vsquare - (keys[k].mod_y_pos * vrelative + vrel_offset)
+                     );
       }else{
         hsquare = hoffset + keys[k].x_pos * hstep;
         vsquare = voffset + keys[k].y_pos * vstep;
