@@ -168,6 +168,8 @@ void show_usage(void) {
            "  -c, --no-cover            Do not display the transparent cover.\n"
            "  -l, --no-letters          Do not display the letters corresponding to each selectable area.\n"
            "  -s, --cursor-step         Set the unit, in pixels, of the length that the mouse pointer moves in each step.\n"
+           "  Example:\n"
+           "  mousable -s 10 -a -l\n"
            "This program is free software see the file MIT-LICENSE for licensing info.\n"
            "Copyright Marco Antonio F. Nogueira 2018\n"
            );
