@@ -191,6 +191,59 @@ void draw_selection(cairo_t *cr, int x_position, int y_position){
   cairo_fill(cr);
 }
 
+void draw_one_letter(cairo_t * cr, int x_position, int y_position, const char * one_letter){
+  // Display letters
+  cairo_set_source_rgb(cr, 3, 0, 0);
+  cairo_select_font_face(cr, "monospace", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+  cairo_set_font_size(cr, 60);
+  cairo_move_to(cr, x_position * hstep + (hstep/2), y_position * vstep + (vstep/2));
+  cairo_show_text(cr, one_letter);
+}
+
+void draw_letters(cairo_t * cr) {
+  draw_one_letter(cr, 0, 0, "1");
+  draw_one_letter(cr, 1, 0, "2");
+  draw_one_letter(cr, 2, 0, "3");
+  draw_one_letter(cr, 3, 0, "4");
+  draw_one_letter(cr, 4, 0, "5");
+  draw_one_letter(cr, 0, 1, "q");
+  draw_one_letter(cr, 1, 1, "w");
+  draw_one_letter(cr, 2, 1, "e");
+  draw_one_letter(cr, 3, 1, "r");
+  draw_one_letter(cr, 4, 1, "t");
+  draw_one_letter(cr, 0, 2, "a");
+  draw_one_letter(cr, 1, 2, "s");
+  draw_one_letter(cr, 2, 2, "d");
+  draw_one_letter(cr, 3, 2, "f");
+  draw_one_letter(cr, 4, 2, "g");
+  draw_one_letter(cr, 0, 3, "z");
+  draw_one_letter(cr, 1, 3, "x");
+  draw_one_letter(cr, 2, 3, "c");
+  draw_one_letter(cr, 3, 3, "v");
+  draw_one_letter(cr, 4, 3, "b");
+
+  draw_one_letter(cr, 5, 0, "6");
+  draw_one_letter(cr, 6, 0, "7");
+  draw_one_letter(cr, 7, 0, "8");
+  draw_one_letter(cr, 8, 0, "9");
+  draw_one_letter(cr, 9, 0, "0");
+  draw_one_letter(cr, 5, 1, "y");
+  draw_one_letter(cr, 6, 1, "u");
+  draw_one_letter(cr, 7, 1, "i");
+  draw_one_letter(cr, 8, 1, "o");
+  draw_one_letter(cr, 9, 1, "p");
+  draw_one_letter(cr, 5, 2, "h");
+  draw_one_letter(cr, 6, 2, "j");
+  draw_one_letter(cr, 7, 2, "k");
+  draw_one_letter(cr, 8, 2, "l");
+  draw_one_letter(cr, 9, 2, "ç");
+  draw_one_letter(cr, 5, 3, "n");
+  draw_one_letter(cr, 6, 3, "m");
+  draw_one_letter(cr, 7, 3, ",");
+  draw_one_letter(cr, 8, 3, ".");
+  draw_one_letter(cr, 9, 3, ";");
+}
+
 static void do_drawing(cairo_t *cr, GtkWidget *widget) {
   cairo_set_source_surface(cr, surface, 0, 0);
   cairo_paint(cr);
@@ -217,6 +270,7 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget) {
   cairo_stroke (cr);
 
   draw_selection (cr, (int)found_x, (int)found_y);
+  draw_letters(cr);
 }
 
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
