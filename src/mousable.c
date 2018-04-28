@@ -195,7 +195,7 @@ int main(int argc, char *argv[]) {
   gtk_window_set_accept_focus (GTK_WINDOW(window), TRUE);
   gtk_window_set_decorated (GTK_WINDOW(window), FALSE);
   gtk_window_set_keep_above(GTK_WINDOW(window), TRUE);
-  gtk_widget_set_size_request (GTK_WIDGET(window), 1366, 768);
+  gtk_widget_set_size_request (GTK_WIDGET(window), screen_width, screen_height);
   gtk_window_fullscreen (GTK_WINDOW(window));
 
   gtk_widget_add_events(window, GDK_KEY_PRESS_MASK);
