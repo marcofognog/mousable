@@ -136,7 +136,7 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget) {
   if(display_alpha_layer){
     float found_x = (current_x_pos / hstep);
     float found_y = (current_y_pos / vstep);
-    draw_alpha_layer;
+    draw_alpha_layer(cr);
     draw_selection (cr, (int)found_x, (int)found_y);
   }
 
