@@ -32,4 +32,12 @@ typedef struct keymap {
   const char *key_char;
 } keyMap;
 
-keyMap keys [40];
+#define ROWS 4
+#define COLUMNS 10
+#define NUMBER_OF_KEYS 40
+keyMap keys [NUMBER_OF_KEYS];
+
+#define FONT_SIZE 60
+#define OUTLINE_ALPHA 0.5
+#define OUTLINE_WIDTH 2
+#define ALPHA_LAYER_INDEX 0.3

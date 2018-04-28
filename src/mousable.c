@@ -19,13 +19,13 @@ void match_key (GdkEventKey * event){
   int hoffset = hstep/2;
   int voffset = vstep/2;
 
-  int hrelative = hstep/10;
-  int vrelative = vstep/4;
+  int hrelative = hstep/COLUMNS;
+  int vrelative = vstep/ROWS;
   int hrel_offset = hrelative/2;
   int vrel_offset = vrelative/2;
 
   int k;
-  for(k=0; k<40; k++){
+  for(k=0; k<NUMBER_OF_KEYS; k++){
     if (event->keyval == keys[k].gdk_key){
       if (event->state & GDK_CONTROL_MASK) {
         move_pointer(
@@ -90,19 +90,19 @@ void draw_selection(cairo_t *cr, int x_position, int y_position){
 
 void draw_one_letter(cairo_t * cr, int x_position, int y_position, const char * one_letter){
   cairo_select_font_face(cr, "monospace", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-  cairo_set_font_size(cr, 60);
+  cairo_set_font_size(cr, FONT_SIZE);
   cairo_move_to(cr, x_position * hstep + (hstep/2), y_position * vstep + (vstep/2));
   cairo_text_path(cr, one_letter);
   cairo_set_source_surface(cr, surface, 0, 0);
   cairo_fill_preserve(cr);
-  cairo_set_source_rgba(cr, 1, 0, 0, 0.5);
-  cairo_set_line_width(cr, 2);
+  cairo_set_source_rgba(cr, 1, 0, 0, OUTLINE_ALPHA);
+  cairo_set_line_width(cr, OUTLINE_WIDTH);
   cairo_stroke(cr);
 }
 
 void draw_letters(cairo_t * cr) {
   int j;
-  for (j=0;j<40;j++){
+  for (j=0;j<NUMBER_OF_KEYS;j++){
     draw_one_letter(cr, keys[j].x_pos, keys[j].y_pos, keys[j].key_char);
   }
 }
@@ -111,11 +111,11 @@ void draw_grid(cairo_t * cr){
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   int i;
   int j;
-  for(i=1; i<10; i++){
+  for(i=1; i<COLUMNS; i++){
     cairo_move_to (cr, hstep * i, 0.0);
     cairo_line_to (cr, hstep * i, screen_height);
   }
-  for(j=1; j<10; j++){
+  for(j=1; j<ROWS; j++){
     cairo_move_to (cr, 0.0, vstep * j);
     cairo_line_to (cr, screen_width, vstep * j);
   }
@@ -126,7 +126,7 @@ void draw_grid(cairo_t * cr){
 
 void draw_alpha_layer(cairo_t *cr){
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-  cairo_paint_with_alpha (cr, 0.3);
+  cairo_paint_with_alpha (cr, ALPHA_LAYER_INDEX);
 }
 
 static void do_drawing(cairo_t *cr, GtkWidget *widget) {
@@ -142,7 +142,6 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget) {
 
   if (display_grid)
     draw_grid(cr);
-
 
   if (display_letters)
     draw_letters(cr);
@@ -171,8 +170,8 @@ int main(int argc, char *argv[]) {
   Screen *screen = ScreenOfDisplay(disp, 0);
   screen_width = screen->width;
   screen_height = screen->height;
-  hstep = screen_width/10;
-  vstep = screen_height/4;
+  hstep = screen_width/COLUMNS;
+  vstep = screen_height/ROWS;
 
   root = DefaultRootWindow(disp);
   surface = cairo_xlib_surface_create(disp, root, DefaultVisual(disp, scr),
