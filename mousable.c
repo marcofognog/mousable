@@ -7,77 +7,12 @@
 #include <cairo.h>
 #include <cairo-xlib.h>
 
-GtkWidget *window;
-Window root;
-int hsquare = 0;
-int vsquare = 0;
-int click_flag = 0;
-int click_scroll_flag = 0;
-
-GtkWidget *darea;
-int screen_width;
-int screen_height;
-int hstep;
-int vstep;
-
-int x_position;
-int y_position;
-
-int x_cursor_pos;
-int y_cursor_pos;
-int cursor_step = 10;
-
-float current_x_pos;
-float current_y_pos;
-
-cairo_surface_t *surface;
-
-typedef struct keymap {
-  int gdk_key;
-  int x_pos;
-  int y_pos;
-  int mod_x_pos;
-  int mod_y_pos;
-} keyMap;
-
-keyMap keys [40];
+#include "mousable.h"
+#include "pointer.c"
 
 int display_alpha_layer = 0;
 int display_grid = 0;
 int display_letters = 1;
-
-void click(int num){
-  Display* display = XOpenDisplay(0);
-  XTestFakeButtonEvent(display, num, 1, 0);
-  XFlush(display);
-  XCloseDisplay(display);
-}
-
-void unclick(int num){
-  Display* display = XOpenDisplay(0);
-  XTestFakeButtonEvent(display, num, 0, 0);
-  XFlush(display);
-  XCloseDisplay(display);
-}
-
-void click_left() { click(1); }
-
-void unclick_left() { unclick(1); }
-
-void click_scroll() { click(2); }
-
-void unclick_scroll() { unclick(2); }
-
-void move_pointer(int dest_x,int dest_y){
-  Display* display = XOpenDisplay(0);
-  XWarpPointer(display, None, root, 0, 0, 0, 0, dest_x, dest_y);
-  x_cursor_pos = dest_x;
-  y_cursor_pos = dest_y;
-  XFlush(display);
-  XCloseDisplay(display);
-  current_x_pos = dest_x;
-  current_y_pos = dest_y;
-}
 
 void define_key(int item, int gdk_key, int x_pos, int y_pos, int mod_x_pos, int mod_y_pos){
   keys[item].gdk_key = gdk_key;
