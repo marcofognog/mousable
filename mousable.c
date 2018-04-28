@@ -248,16 +248,7 @@ void draw_letters(cairo_t * cr) {
   draw_one_letter(cr, 9, 3, ";");
 }
 
-static void do_drawing(cairo_t *cr, GtkWidget *widget) {
-  cairo_set_source_surface(cr, surface, 0, 0);
-  cairo_paint(cr);
-  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-  cairo_paint_with_alpha (cr, 0.3);
-
-  float found_x = (current_x_pos / hstep);
-  float found_y = (current_y_pos / vstep);
-
-  //draw grid
+void draw_grid(cairo_t * cr){
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   int i;
   int j;
@@ -272,7 +263,18 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget) {
 
   cairo_set_line_width (cr, 1.0);
   cairo_stroke (cr);
+}
 
+static void do_drawing(cairo_t *cr, GtkWidget *widget) {
+  cairo_set_source_surface(cr, surface, 0, 0);
+  cairo_paint(cr);
+  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+  cairo_paint_with_alpha (cr, 0.3);
+
+  float found_x = (current_x_pos / hstep);
+  float found_y = (current_y_pos / vstep);
+
+  draw_grid(cr);
   draw_selection (cr, (int)found_x, (int)found_y);
   draw_letters(cr);
 }
