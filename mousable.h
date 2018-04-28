@@ -29,6 +29,7 @@ typedef struct keymap {
   int y_pos;
   int mod_x_pos;
   int mod_y_pos;
+  const char *key_char;
 } keyMap;
 
 keyMap keys [40];
