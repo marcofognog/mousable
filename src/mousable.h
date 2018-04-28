@@ -16,7 +16,7 @@ int y_position;
 
 int x_cursor_pos;
 int y_cursor_pos;
-int cursor_step = 10;
+int cursor_step;
 
 float current_x_pos;
 float current_y_pos;

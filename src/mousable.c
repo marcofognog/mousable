@@ -14,6 +14,7 @@
 int display_alpha_layer = 1;
 int display_grid = 1;
 int display_letters = 1;
+int cursor_step = 10;
 
 void match_key (GdkEventKey * event){
   int hoffset = hstep/2;
