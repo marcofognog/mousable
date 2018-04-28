@@ -11,8 +11,8 @@
 #include "pointer.c"
 #include "key_definitions.c"
 
-int display_alpha_layer = 0;
-int display_grid = 0;
+int display_alpha_layer = 1;
+int display_grid = 1;
 int display_letters = 1;
 
 void match_key (GdkEventKey * event){
