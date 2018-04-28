@@ -189,6 +189,16 @@ void draw_selection(cairo_t *cr, int x_position, int y_position){
   cairo_set_source_surface(cr, surface, 0, 0);
   cairo_rectangle (cr, x, y, hstep, vstep);
   cairo_fill(cr);
+}
+
+static void do_drawing(cairo_t *cr, GtkWidget *widget) {
+  cairo_set_source_surface(cr, surface, 0, 0);
+  cairo_paint(cr);
+  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+  cairo_paint_with_alpha (cr, 0.3);
+
+  float found_x = (current_x_pos / hstep);
+  float found_y = (current_y_pos / vstep);
 
   //draw grid
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
@@ -205,16 +215,6 @@ void draw_selection(cairo_t *cr, int x_position, int y_position){
 
   cairo_set_line_width (cr, 1.0);
   cairo_stroke (cr);
-}
-
-static void do_drawing(cairo_t *cr, GtkWidget *widget) {
-  cairo_set_source_surface(cr, surface, 0, 0);
-  cairo_paint(cr);
-  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-  cairo_paint_with_alpha (cr, 0.3);
-
-  float found_x = (current_x_pos / hstep);
-  float found_y = (current_y_pos / vstep);
 
   draw_selection (cr, (int)found_x, (int)found_y);
 }
