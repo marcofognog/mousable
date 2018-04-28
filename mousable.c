@@ -200,6 +200,7 @@ void draw_one_letter(cairo_t * cr, int x_position, int y_position, const char * 
   cairo_set_source_surface(cr, surface, 0, 0);
   cairo_fill_preserve(cr);
   cairo_set_source_rgba(cr, 1, 0, 0, 0.5);
+  cairo_set_line_width(cr, 2);
   cairo_stroke(cr);
 }
 
