@@ -13,6 +13,10 @@ void show_usage(void) {
            "  -s, --cursor-step         Set the unit, in pixels, of the length that the mouse pointer moves in each step.\n"
            "  Example:\n"
            "  mousable -s 10 -a -l\n"
+           "Once activated, the following keys map to mouse functions:\n"
+           "  Space - click with left button\n"
+           "  Enter - click with scroll button\n"
+           "  Escape - leave without clicking\n"
            "This program is free software see the file MIT-LICENSE for licensing info.\n"
            "Copyright Marco Antonio F. Nogueira 2018\n"
            );
