@@ -34,7 +34,7 @@ void show_version(void) {
 void parse_options(int argc, char *argv[]){
   int c;
   while(1){
-    static char stropts[] = "vagls:";
+    static char stropts[] = "hvagls:";
     static struct option long_options[] =
       {
         {"no-grid",  no_argument, 0, 'g'},
