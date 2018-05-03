@@ -3,6 +3,9 @@ int display_grid = 1;
 int display_letters = 1;
 int cursor_step = 10;
 
+#define PACKAGE "mousable"
+#define VERSION "0.1.0"
+
 void show_usage(void) {
    fprintf(stdout,
            "Usage : mousable [OPTIONS]\n"
@@ -23,10 +26,15 @@ void show_usage(void) {
    exit(0);
 }
 
+void show_version(void) {
+   printf(PACKAGE " version " VERSION "\n");
+   exit(0);
+}
+
 void parse_options(int argc, char *argv[]){
   int c;
   while(1){
-    static char stropts[] = "agls:";
+    static char stropts[] = "vagls:";
     static struct option long_options[] =
       {
         {"no-grid",  no_argument, 0, 'g'},
@@ -34,6 +42,7 @@ void parse_options(int argc, char *argv[]){
         {"no-letters",  no_argument, 0, 'l'},
         {"cursor-step",    required_argument, 0, 's'},
         {"help",    no_argument, 0, 'h'},
+        {"version",    no_argument, 0, 'v'},
         {0, 0, 0, 0}
       };
     int option_index = 0;
@@ -55,11 +64,11 @@ void parse_options(int argc, char *argv[]){
       break;
     case 'h':
       show_usage();
-      exit(0);
+    case 'v':
+      show_version();
     }
 
     if (c == -1)
       break;
   }
 }
-
