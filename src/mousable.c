@@ -13,6 +13,10 @@
 #include "key_definitions.c"
 #include "options.c"
 
+Display *disp;
+int scr;
+XImage *x_image;
+
 void match_key (GdkEventKey * event){
   int hoffset = hstep/2;
   int voffset = vstep/2;
@@ -41,6 +45,12 @@ void match_key (GdkEventKey * event){
   }
 }
 
+void discover_jump() {
+  unsigned long pixel = XGetPixel(x_image, current_x_pos, 1);
+  printf("startx: %f, starty: %f\n", current_x_pos, current_y_pos);
+  printf("pix: %lu\n", pixel);
+}
+
 gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
   if (event->keyval == GDK_KEY_Escape){
     gtk_main_quit();
@@ -65,6 +75,7 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
     move_pointer(current_x_pos + cursor_step, current_y_pos);
   }
   if (event->keyval == GDK_KEY_Up){
+    discover_jump();
     move_pointer(current_x_pos, current_y_pos - cursor_step);
   }
   if (event->keyval == GDK_KEY_Down){
@@ -158,8 +169,6 @@ static gboolean get_pointer_pos (GtkWidget *widget, GdkEventCrossing *event, gpo
 int main(int argc, char *argv[]) {
   parse_options(argc, argv);
 
-  Display *disp;
-  int scr;
 
   map_keys();
 
@@ -176,6 +185,7 @@ int main(int argc, char *argv[]) {
   surface = cairo_xlib_surface_create(disp, root, DefaultVisual(disp, scr),
                                       DisplayWidth(disp, scr),
                                       DisplayHeight(disp, scr));
+
 
   // Why do we need to save to a file for the surface to have the right image?
   cairo_surface_write_to_png( surface, "/dev/null");
@@ -204,6 +214,7 @@ int main(int argc, char *argv[]) {
 
   gtk_widget_show_all(window);
 
+  x_image = XGetImage(disp, root, 0, 0, DisplayWidth(disp, scr), DisplayHeight(disp, scr), AllPlanes, ZPixmap);
   gtk_main();
 
   if (click_flag){
