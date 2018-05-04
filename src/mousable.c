@@ -46,9 +46,15 @@ void match_key (GdkEventKey * event){
 }
 
 void discover_jump() {
-  unsigned long pixel = XGetPixel(x_image, current_x_pos, 1);
   printf("startx: %f, starty: %f\n", current_x_pos, current_y_pos);
-  printf("pix: %lu\n", pixel);
+
+  XColor c;
+  c.pixel = XGetPixel(x_image, current_x_pos, current_y_pos);
+  XQueryColor(disp, XDefaultColormap(disp, XDefaultScreen(disp)), &c);
+
+  printf("red: %i\n", c.red/256);
+  printf("green: %i\n", c.green/256);
+  printf("blue: %i\n", c.blue/256);
 }
 
 gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
@@ -187,6 +193,7 @@ int main(int argc, char *argv[]) {
                                       DisplayHeight(disp, scr));
 
 
+  x_image = XGetImage(disp, root, 0, 0, DisplayWidth(disp, scr), DisplayHeight(disp, scr), AllPlanes, ZPixmap);
   // Why do we need to save to a file for the surface to have the right image?
   cairo_surface_write_to_png( surface, "/dev/null");
 
@@ -214,7 +221,6 @@ int main(int argc, char *argv[]) {
 
   gtk_widget_show_all(window);
 
-  x_image = XGetImage(disp, root, 0, 0, DisplayWidth(disp, scr), DisplayHeight(disp, scr), AllPlanes, ZPixmap);
   gtk_main();
 
   if (click_flag){
