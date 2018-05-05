@@ -78,15 +78,30 @@ int very_similar(XColor start, XColor c){
     return 0;
   }
 }
-int discover_jump() {
+int discover_jump(int direction) {
   XColor start = getPixel(current_x_pos, current_y_pos);
   printf("---> start rgb(%i, %i, %i)\n", start.red/256, start.green/256, start.blue/256);
   printf("x: %f, y: %f\n", current_x_pos, current_y_pos);
 
   int min_step = 5;
   int theta;
-  for(theta=1; theta<300; theta++){
-    XColor c = getPixel(current_x_pos, current_y_pos + theta);
+  int distance = 300;
+  XColor c;
+  for(theta=1; theta<distance; theta++){
+    switch(direction){
+    case 0:
+      c = getPixel(current_x_pos, current_y_pos + theta);
+      break;
+    case 1:
+      c = getPixel(current_x_pos, current_y_pos - theta);
+      break;
+    case 2:
+      c = getPixel(current_x_pos + theta, current_y_pos);
+      break;
+    case 3:
+      c = getPixel(current_x_pos - theta, current_y_pos);
+      break;
+    }
     printf("theta: %i\n", theta);
     printf("rgb( %i, %i, %i)\n", c.red/256, c.green/256, c.blue/256);
     if (!very_similar(start, c)){
@@ -118,17 +133,16 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data) {
   }
 
   if (event->keyval == GDK_KEY_Left){
-    move_pointer(current_x_pos - cursor_step, current_y_pos);
+    move_pointer(current_x_pos - discover_jump(3), current_y_pos);
   }
   if (event->keyval == GDK_KEY_Right){
-    move_pointer(current_x_pos + cursor_step, current_y_pos);
+    move_pointer(current_x_pos + discover_jump(2), current_y_pos);
   }
   if (event->keyval == GDK_KEY_Up){
-    move_pointer(current_x_pos, current_y_pos - cursor_step);
+    move_pointer(current_x_pos, current_y_pos - discover_jump(1));
   }
   if (event->keyval == GDK_KEY_Down){
-    int delta = discover_jump();
-    move_pointer(current_x_pos, current_y_pos + delta);
+    move_pointer(current_x_pos, current_y_pos + discover_jump(0));
   }
 
   match_key(event);
