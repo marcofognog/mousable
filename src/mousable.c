@@ -60,10 +60,7 @@ int similar(int color1, int color2){
       return 1;
       break;
     }
-  }
-  int epsilon;
-  for(epsilon=0; epsilon<similarity*256; epsilon++){
-    if(color1 == color2 - epsilon){
+    if(color1 == color2 - gama){
       return 1;
       break;
     }
