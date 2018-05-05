@@ -92,10 +92,8 @@ int discover_jump() {
     printf("theta: %i\n", theta);
     printf("rgb( %i, %i, %i)\n", c.red/256, c.green/256, c.blue/256);
     if (!very_similar(start, c)){
-      if(theta > 10){
-        return theta;
-        break;
-      }
+      return theta;
+      break;
     }
   }
 }
