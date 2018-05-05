@@ -83,14 +83,19 @@ int discover_jump() {
   printf("---> start rgb(%i, %i, %i)\n", start.red/256, start.green/256, start.blue/256);
   printf("x: %f, y: %f\n", current_x_pos, current_y_pos);
 
+  int min_step = 5;
   int theta;
   for(theta=1; theta<300; theta++){
     XColor c = getPixel(current_x_pos, current_y_pos + theta);
     printf("theta: %i\n", theta);
     printf("rgb( %i, %i, %i)\n", c.red/256, c.green/256, c.blue/256);
     if (!very_similar(start, c)){
-      return theta;
-      break;
+      if(theta > min_step){
+        return theta;
+        break;
+      } else {
+        return min_step;
+      }
     }
   }
 }
