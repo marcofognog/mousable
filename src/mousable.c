@@ -53,10 +53,18 @@ XColor getPixel(int x, int y){
 }
 
 int similar(int color1, int color2){
-  int y;
-  for(y=0; y<20; y++){
-    if(color1 == color2 + y){
-      printf("very similar\n");
+  int gama;
+  for(gama=0; gama<150*256; gama++){
+    if(color1 == color2 + gama){
+      printf("similar\n");
+      return 1;
+      break;
+    }
+  }
+  int epsilon;
+  for(epsilon=0; epsilon<150*256; epsilon++){
+    if(color1 == color2 - epsilon){
+      printf("similar\n");
       return 1;
       break;
     }
@@ -67,20 +75,23 @@ int similar(int color1, int color2){
 int very_similar(XColor start, XColor c){
   if(similar(c.green, start.green) &&
      similar(c.red, start.red) &&
-     similar(c.blue, start.blue))
+     similar(c.blue, start.blue)){
+      printf("very similar\n");
     return 1;
+  }
   return 0;
 }
 void discover_jump() {
-  int theta;
   XColor start = getPixel(current_x_pos, current_y_pos);
   printf("---> start rgb(%i, %i, %i)\n", start.red/256, start.green/256, start.blue/256);
   printf("x: %f, y: %f\n", current_x_pos, current_y_pos);
+
+  int theta;
   for(theta=1; theta<100; theta++){
     XColor c = getPixel(current_x_pos, theta);
     printf("theta: %i\n", theta);
     printf("rgb( %i, %i, %i)\n", c.red/256, c.green/256, c.blue/256);
-    if (very_similar(start, c)){
+    if (!very_similar(start, c)){
       move_pointer(current_x_pos, current_y_pos + theta);
       break;
     }
