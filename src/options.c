@@ -3,19 +3,19 @@ int display_grid = 1;
 int display_letters = 1;
 int cursor_step = 10;
 
-#define PACKAGE "mousable"
+#define PACKAGE "xmousable"
 #define VERSION "0.1.0"
 
 void show_usage(void) {
    fprintf(stdout,
-           "Usage : mousable [OPTIONS]\n"
+           "Usage : " PACKAGE " [OPTIONS]\n"
            "  -h, --help                Display this help and exit.\n"
            "  -g, --no-grid             Do not display the grid.\n"
            "  -c, --no-cover            Do not display the transparent cover.\n"
            "  -l, --no-letters          Do not display the letters corresponding to each selectable area.\n"
            "  -s, --cursor-step         Set the unit, in pixels, of the length that the mouse pointer moves in each step.\n"
            "  Example:\n"
-           "  mousable -s 10 -a -l\n"
+           "  " PACKAGE " -s 10 -a -l\n"
            "Once activated, the following keys map to mouse functions:\n"
            "  Space - click with left button\n"
            "  Enter - click with scroll button\n"

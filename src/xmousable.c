@@ -8,7 +8,7 @@
 #include <cairo.h>
 #include <cairo-xlib.h>
 
-#include "mousable.h"
+#include "xmousable.h"
 #include "pointer.c"
 #include "key_definitions.c"
 #include "options.c"
