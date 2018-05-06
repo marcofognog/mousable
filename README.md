@@ -53,4 +53,4 @@ If you have any trouble, please get in touch, I'd be glad to help.
 
 Distributed under the MIT-LICENSE . See ``MIT-LICENSE`` for more information.
 
-[https://github.com/marcofognog/xmousable (https://github.com/marcofognog/xmousable)
+https://github.com/marcofognog/xmousable
