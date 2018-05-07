@@ -38,7 +38,7 @@ I promise you it looks so much better with a cleaner WM such as Awesome or I3.
 
 ## Development setup
 
-Would be grate to make the build more portable, for now running only `make` is enough to produce binary.
+Would be great to make the build more portable, for now running only `make` is enough to produce binary.
 
 ```sh
 $ make
