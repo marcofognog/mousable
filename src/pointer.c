@@ -1,3 +1,5 @@
+#include "xmousable.h"
+
 void click(int num){
   Display* display = XOpenDisplay(0);
   XTestFakeButtonEvent(display, num, 1, 0);

@@ -1,9 +1,22 @@
+#ifndef XMOUSABLE_H
+#define XMOUSABLE_H
+
+#include <unistd.h>
+#include <getopt.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <gtk/gtk.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
+#include <cairo.h>
+#include <cairo-xlib.h>
+
 GtkWidget *window;
 Window root;
-int hsquare = 0;
-int vsquare = 0;
-int click_flag = 0;
-int click_scroll_flag = 0;
+int hsquare;
+int vsquare;
+int click_flag;
+int click_scroll_flag;
 
 GtkWidget *darea;
 int screen_width;
@@ -41,3 +54,5 @@ keyMap keys [NUMBER_OF_KEYS];
 #define OUTLINE_ALPHA 0.5
 #define OUTLINE_WIDTH 2
 #define ALPHA_LAYER_INDEX 0.3
+
+#endif /* XMOUSABLE_H */

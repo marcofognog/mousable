@@ -1,3 +1,5 @@
+#include "xmousable.h"
+
 int display_alpha_layer = 1;
 int display_grid = 1;
 int display_letters = 1;

@@ -1,3 +1,5 @@
+#include "xmousable.h"
+
 void define_key(int item, int gdk_key, int x_pos, int y_pos, int mod_x_pos, int mod_y_pos, const char *key_char){
   keys[item].gdk_key = gdk_key;
   keys[item].x_pos = x_pos;

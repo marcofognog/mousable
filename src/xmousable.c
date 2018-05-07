@@ -1,17 +1,11 @@
-#include <unistd.h>
-#include <getopt.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <gtk/gtk.h>
-#include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
-#include <cairo.h>
-#include <cairo-xlib.h>
-
-#include "xmousable.h"
 #include "pointer.c"
 #include "key_definitions.c"
 #include "options.c"
+
+int hsquare = 0;
+int vsquare = 0;
+int click_flag = 0;
+int click_scroll_flag = 0;
 
 void match_key (GdkEventKey * event){
   int hoffset = hstep/2;
